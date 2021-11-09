@@ -1,93 +1,151 @@
-
 <template>
-  <q-layout view="hhh LpR lff">
+  <q-layout view="lhr LpR fFf">
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" class="bg-primary"  >
-      <div class="full-width text-h5 q-my-lg text-weight-bold text-center text-white bg-" >
+    <q-header bordered class="bg-white text-grey-7">
+      <q-toolbar>
+        <q-btn dense flat round color="grey-7" icon="menu" @click="toggleLeftDrawer" />
+
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+          Title
+        </q-toolbar-title>
+        <q-space />
+        <q-btn flat rounded dense size="14px" icon="notifications_none"></q-btn>
+        <div class="row q-pr-md">
+          <q-btn-dropdown
+            flat
+          >
+          <div>
+            <div class="row no-wrap q-pa-md" style="width:250px;" >
+              <div class="row">
+                <div class="col">
+                  <q-avatar size="72px">
+                    <q-icon name="account_circle" color="grey-7" size="75px" />
+                  </q-avatar>
+                </div>
+
+                <div class="col q-ml-sm">
+                  <div class="text-subtitle1 q-mt-sm q-mb-xs text-weight-bold">Admin</div>
+                  <div class="text-caption q-pa-none">Administrator</div>
+                </div>
+              </div>
+              <!-- <div class="column" style="max-width: 300px;">
+                <div class="text-h6 q-mb-md">Settings</div>
+
+                <q-item to="/admin/account" clickable>
+                  <q-item-section>
+                    <q-item-label>Account Settings</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </div>
+
+              <div class="column items-center" style="max-width: 300px;">
+                <q-avatar size="72px">
+                  <q-icon name="account_circle" color="grey-7" size="75px" />
+                </q-avatar>
+
+                <q-btn
+                  color="primary"
+                  label="Logout"
+                  push
+                  size="sm"
+                  v-close-popup
+                />
+              </div> -->
+            </div>
+            <div class="column">
+              <div class="full-width">
+                <q-separator class="full-width"></q-separator>
+              </div>
+                <div  class="text-subtitle2 q-mt-md q-ml-md q-pb-md">Logout Administrator</div>
+            </div>
+          </div>
+            <template v-slot:label>
+              <div class="row">
+                <div class="text-subtitle2 text-grey-7 q-mt-xs">Admin</div>
+                <q-icon name="account_circle" class="q-mt-xs q-ml-sm"></q-icon>
+              </div>
+            </template>
+          </q-btn-dropdown>
+        </div>
+
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+      <!-- drawer content -->
+       <div class="full-width text-h5 q-my-lg text-weight-bold text-center text-primary bg-" >
         Abcent.
       </div>
-      <q-list class="q-pb-lg">
-        <q-item>
-          <q-item-section avatar>
-          <q-avatar>
-            <img src="https://mdbootstrap.com/img/Photos/Avatars/img(3).jpg" />
-          </q-avatar>
-        </q-item-section>
-
-          <q-item-section>
-            <q-item-label class="text-white text-weight-bold">Dave Panduwinata</q-item-label>
-            <q-item-label class="text-white" caption lines="1">Admin</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-
       <q-list class="q-mt-md ">
         <q-item  clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="white" name="dashboard" />
+            <q-icon color="grey-7" name="dashboard" />
           </q-item-section>
 
-          <q-item-section class="text-white">
+          <q-item-section class="text-grey-7">
             Dashboard
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="white" name="apartment" />
+            <q-icon color="grey-7" name="apartment" />
           </q-item-section>
 
-          <q-item-section class="text-white">
+          <q-item-section class="text-grey-7">
             Company
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="white" name="people" />
+            <q-icon color="grey-7" name="people" />
           </q-item-section>
 
-          <q-item-section class="text-white">
+          <q-item-section class="text-grey-7">
             Employees
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="white" name="summarize" />
+            <q-icon color="grey-7" name="summarize" />
           </q-item-section>
 
-          <q-item-section class="text-white">
+          <q-item-section class="text-grey-7">
             Report
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="white" name="map" />
+            <q-icon color="grey-7" name="map" />
           </q-item-section>
-\
-          <q-item-section class="text-white">
+
+          <q-item-section class="text-grey-7">
             Map Abcent
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="white" name="note_alt" />
+            <q-icon color="grey-7" name="note_alt" />
           </q-item-section>
 
-          <q-item-section class="text-white">
+          <q-item-section class="text-grey-7">
             Attandace
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="white" name="settings" />
+            <q-icon color="grey-7" name="settings" />
           </q-item-section>
 
-          <q-item-section class="text-white">
+          <q-item-section class="text-grey-7">
             Settings
           </q-item-section>
         </q-item>
@@ -96,15 +154,14 @@
       <q-list class="q-pt-lg">
         <q-item clickable v-ripple @click="$router.replace('')">
           <q-item-section avatar>
-            <q-icon color="white" name="logout" />
+            <q-icon color="grey-7" name="logout" />
           </q-item-section>
 
-          <q-item-section class="text-white">
+          <q-item-section class="text-grey-7">
             Logout
           </q-item-section>
         </q-item>
       </q-list>
-      <!-- drawer content -->
     </q-drawer>
 
     <q-page-container>
