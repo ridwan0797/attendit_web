@@ -79,17 +79,17 @@
        <div class="full-width text-h5 q-my-lg text-weight-bold text-center text-primary bg-" >
         Abcent.
       </div>
-      <q-list class="q-mt-md ">
-        <q-item  clickable v-ripple>
+      <q-list class="q-mt-lg">
+        <q-item  clickable to="/dashboard" v-ripple>
           <q-item-section avatar>
-            <q-icon color="grey-7" name="dashboard" />
+            <q-icon name="dashboard" />
           </q-item-section>
 
-          <q-item-section class="text-grey-7">
+          <q-item-section >
             Dashboard
           </q-item-section>
         </q-item>
-
+<!--
         <q-item clickable v-ripple>
           <q-item-section avatar>
             <q-icon color="grey-7" name="apartment" />
@@ -148,7 +148,63 @@
           <q-item-section class="text-grey-7">
             Settings
           </q-item-section>
+        </q-item> -->
+      </q-list>
+
+      <q-list>
+        <q-item  clickable to="/pegawai" v-ripple>
+          <q-item-section avatar>
+            <q-icon name="people" />
+          </q-item-section>
+
+          <q-item-section >
+            Pegawai
+          </q-item-section>
         </q-item>
+      </q-list>
+
+      <!-- Perusahaan -->
+      <q-list>
+        <q-expansion-item icon="apartment" label="Perusahaan">
+          <EssentialLink
+            v-for="(item, index) in perusahaan"
+            :key="index"
+            v-bind="item"
+          />
+        </q-expansion-item>
+      </q-list>
+
+      <!-- Absensi -->
+      <q-list>
+        <q-expansion-item icon="text_snippet" label="Absensi">
+          <EssentialLink
+            v-for="(item, index) in absensi"
+            :key="index"
+            v-bind="item"
+          />
+        </q-expansion-item>
+      </q-list>
+
+      <!-- Sakit dan Izin -->
+      <q-list>
+        <q-expansion-item icon="masks" label="Sakit dan Izin">
+          <EssentialLink
+            v-for="(item, index) in absen"
+            :key="index"
+            v-bind="item"
+          />
+        </q-expansion-item>
+      </q-list>
+
+      <!-- Pengaturan -->
+      <q-list>
+        <q-expansion-item icon="settings" label="Pengaturan">
+          <EssentialLink
+            v-for="(item, index) in pengaturan"
+            :key="index"
+            v-bind="item"
+          />
+        </q-expansion-item>
       </q-list>
 
       <q-list class="q-pt-lg">
@@ -173,12 +229,86 @@
 
 <script>
 import { ref } from 'vue'
+import EssentialLink from 'components/EssentialLink.vue'
+
+const perusahaan = [
+  {
+    title: 'Lokasi Perusahaan',
+    caption: '',
+    icon: 'place',
+    to: '/perusahaan/lokasi'
+  },
+  {
+    title: 'Departemen',
+    caption: '',
+    icon: 'business',
+    to: '/perusahaan/departemen'
+  }
+]
+
+const absensi = [
+  {
+    title: 'Absensi',
+    caption: '',
+    icon: 'contact_page',
+    to: '/absensi'
+  },
+  {
+    title: 'Import Absensi',
+    caption: '',
+    icon: 'import_export',
+    to: 'import-absensi'
+  }
+]
+
+const absen = [
+  {
+    title: 'Data Sakit',
+    caption: '',
+    icon: 'sick',
+    to: 'data-sakit'
+  },
+  {
+    title: 'Data Izin',
+    caption: '',
+    icon: 'personal_injury',
+    to: 'data-izin'
+  }
+]
+
+const pengaturan = [
+  {
+    title: 'Hak Akses',
+    caption: '',
+    icon: 'accessibility',
+    to: 'hak-akses'
+  },
+  {
+    title: 'Shift kerja',
+    caption: '',
+    icon: 'date_range',
+    to: 'shift-kerja'
+  },
+  {
+    title: 'Company',
+    caption: '',
+    icon: 'local_convenience_store',
+    to: 'company'
+  }
+]
 
 export default {
+  components: {
+    EssentialLink
+  },
   setup () {
     const leftDrawerOpen = ref(false)
 
     return {
+      absensi,
+      perusahaan,
+      absen,
+      pengaturan,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
@@ -187,3 +317,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.q-item.q-router-link--active, .q-item--active {
+    color: var(-q--primary);
+    border-right-width: 3px;
+    border-right-style: solid;
+    border-right-color: var(-q--primary);
+}
+</style>
