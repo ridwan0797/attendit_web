@@ -83,7 +83,14 @@ module.exports = configure(function (ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      config: {},
+      config: {
+        brand: {
+          primary: '#5247ff',
+          secondary: '#7147ff',
+          accent: '#56c4f7',
+          dark: '#232744'
+        }
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
