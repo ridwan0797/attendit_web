@@ -5,11 +5,11 @@
       <q-toolbar>
         <q-btn dense flat round color="grey-7" icon="menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title>
+        <q-toolbar-title class="text-black text-weight-medium">
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-          Title
+          {{$route.meta.name}}
         </q-toolbar-title>
         <q-space />
         <q-btn flat rounded dense size="14px" icon="notifications_none"></q-btn>
@@ -77,7 +77,7 @@
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
       <!-- drawer content -->
        <div class="full-width text-h5 q-my-lg text-weight-bold text-center text-primary bg-" >
-        Abcent.
+        <q-img src="~assets/letter.png"  width="135px"></q-img>
       </div>
       <q-list class="q-mt-lg">
         <q-item  clickable to="/dashboard" v-ripple>
@@ -257,7 +257,7 @@ const absensi = [
     title: 'Import Absensi',
     caption: '',
     icon: 'import_export',
-    to: 'import-absensi'
+    to: '/absensi/import-absensi'
   }
 ]
 
@@ -266,13 +266,13 @@ const absen = [
     title: 'Data Sakit',
     caption: '',
     icon: 'sick',
-    to: 'data-sakit'
+    to: '/sakit'
   },
   {
     title: 'Data Izin',
     caption: '',
     icon: 'personal_injury',
-    to: 'data-izin'
+    to: '/izin'
   }
 ]
 
