@@ -7,7 +7,7 @@
       row-key="name"
     >
       <template v-slot:top-left>
-        <q-btn label="Tambah Lokasi" icon="add_circle_outline" class="bg-primary text-white" @click="form = true"></q-btn>
+        <q-btn label="Tambah Lokasi" icon="add_circle_outline" class="bg-primary text-white" @click="form = true; tipe = 'create'"></q-btn>
       </template>
 
       <template v-slot:top-rig ht>
@@ -45,6 +45,7 @@
             flat
             color="purple"
             icon='edit'
+            @click="onUpdateForm(cell.row)"
           />
 
           <q-btn
@@ -53,66 +54,36 @@
             flat
             color="red"
             icon='delete'
+            @click="deleteData(cell.row.id)"
           />
         </q-td>
       </template>
     </q-table>
-    <FormLokasi v-model="form"></FormLokasi>
+    <FormLokasi v-model="form" :isUpdate="tipe" :dataItem="itemData" @onHide="(x) => emitCek(x)"></FormLokasi>
   </div>
 </template>
 
 <script>
 import FormLokasi from './Form.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { api } from 'src/boot/axios'
+import { Dialog, Notify } from 'quasar'
 const columns = [
   {
     name: 'nama',
     required: true,
     label: 'NAMA',
     align: 'center',
-    field: row => row.nama,
+    field: 'name',
     format: val => `${val}`,
     sortable: true,
     headerStyle: 'width:5%'
   },
-  { name: 'kota', align: 'center', label: 'KOTA', field: 'kota', sortable: true },
-  { name: 'provinsi', align: 'center', label: 'PROVINSI', field: 'provinsi', sortable: true },
-  { name: 'kode_pos', align: 'center', label: 'KODE POS', field: 'kode_pos' },
+  { name: 'kota', align: 'center', label: 'KOTA', field: 'city', sortable: true },
+  { name: 'provinsi', align: 'center', label: 'PROVINSI', field: 'province', sortable: true },
+  { name: 'kode_pos', align: 'center', label: 'KODE POS', field: 'zip_code' },
   { name: 'lokasi', align: 'center', label: 'LOKASI' },
   { name: 'action', label: 'ACTION', align: 'center' }
-]
-
-const rows = [
-  {
-    nama: 'District Bisnis dan Manajemen Langit Company',
-    kota: 'Jakarta',
-    provinsi: 'DKI JAKARTA',
-    kode_pos: '450187'
-  },
-  {
-    nama: 'District Pembuatan Barang',
-    kota: 'Cikarang',
-    provinsi: 'JAWA BARAT',
-    kode_pos: '450187'
-  },
-  {
-    nama: 'Store Cabang 1',
-    kota: 'Bandung',
-    provinsi: 'JAWA BARAT',
-    kode_pos: '450187'
-  },
-  {
-    nama: 'Store Cabang 2',
-    kota: 'Jakarta',
-    provinsi: 'DKI JAKARTA',
-    kode_pos: '42087'
-  },
-  {
-    nama: 'Store Cabang 3',
-    kota: 'Surabaya',
-    provinsi: 'JAWA TIMUR',
-    kode_pos: '36789'
-  }
 ]
 
 export default {
@@ -121,10 +92,69 @@ export default {
   },
   setup () {
     const form = ref(false)
+    const rows = ref([])
+    const itemData = ref({})
+    const tipe = ref('')
+
+    const getData = () => {
+      const url = 'http://localhost:3000/api/v1/company-location'
+      void api.get(url)
+        .then((response) => {
+          rows.value = (response.data.data)
+          console.log(response, 'getData')
+        })
+    }
+
+    const deleteData = (id) => {
+      const url = 'http://localhost:3000/api/v1/company-location'
+      Dialog.create({
+        title: 'Delete',
+        message: 'Are U sure to delete this ?'
+      }).onOk(() => {
+        const updateUrl = url + '/' + id
+        void api.delete(updateUrl)
+          .then((response) => {
+            console.log(response)
+            Notify.create({ message: 'Delete Data Successfully ', color: 'positive' })
+            getData()
+          })
+          .catch((error) => {
+            console.error(error, error.response)
+            Notify.create({ message: 'Delete Data Failed', color: 'Negative' })
+          })
+        // console.log('OK')
+      }).onCancel(() => {
+        // console.log('Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    }
+
+    const emitCek = (cek) => {
+      form.value = false
+      getData()
+    }
+
+    const onUpdateForm = (item) => {
+      itemData.value = item
+      tipe.value = 'update'
+      form.value = true
+      console.log(item)
+    }
+
+    onMounted(() => {
+      getData()
+    })
     return {
+      tipe,
       form,
       columns,
-      rows
+      rows,
+      itemData,
+      onUpdateForm,
+      emitCek,
+      getData,
+      deleteData
     }
   }
 }

@@ -7,7 +7,7 @@
       row-key="name"
     >
       <template v-slot:top-left>
-        <q-btn label="Tambah Lokasi" icon="add_circle_outline" class="bg-primary text-white" @click="form = true"></q-btn>
+        <q-btn label="Tambah Lokasi" icon="add_circle_outline" class="bg-primary text-white" @click="showDialog()"></q-btn>
       </template>
 
       <template v-slot:top-right>
@@ -35,16 +35,9 @@
             round
             dense
             flat
-            color="green"
-            icon='visibility'
-          />
-
-          <q-btn
-            round
-            dense
-            flat
-            color="purple"
+            color="blue"
             icon='edit'
+            @click="onUpdateShow(cell.row.id)"
           />
 
           <q-btn
@@ -53,6 +46,7 @@
             flat
             color="red"
             icon='delete'
+            @click="deleteData(cell.row.id)"
           />
         </q-td>
       </template>
@@ -67,15 +61,15 @@
         </q-card-section>
 
         <q-card-section>
-          <q-input label="Nama" stack-label></q-input>
+          <q-input label="Nama" v-model="record.name" stack-label></q-input>
         </q-card-section>
 
         <q-card-section>
-          <q-input label="Kode" stack-label></q-input>
+          <q-input label="Kode" v-model="record.code" stack-label></q-input>
         </q-card-section>
 
          <q-card-actions align="right">
-          <q-btn flat label="SAVE" color="primary" v-close-popup />
+          <q-btn flat label="SAVE" color="primary" @click="() => { isUpdate === true ? submitUpdate() :  submitPost() }" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -83,44 +77,139 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { api } from 'src/boot/axios'
+import { Dialog, Notify } from 'quasar'
 const columns = [
   {
     name: 'nama',
     required: true,
     label: 'NAMA',
     align: 'center',
-    field: row => row.nama,
+    field: 'name',
     format: val => `${val}`,
     sortable: true,
     headerStyle: 'width:30%'
   },
-  { name: 'kode', align: 'center', label: 'KODE', field: 'kode', sortable: true },
+  { name: 'kode', align: 'center', label: 'KODE', field: 'code', sortable: true },
   { name: 'action', label: 'ACTION', align: 'center' }
-]
-
-const rows = [
-  {
-    nama: 'Departemen IT',
-    kode: 'IT0987'
-  },
-  {
-    nama: 'Departemen Legal & Law',
-    kode: 'LA0937'
-  },
-  {
-    nama: 'Departemen Ekonomi',
-    kode: 'EK0283'
-  }
 ]
 
 export default {
   setup () {
     const form = ref(false)
+    const isUpdate = ref(false)
+    const idColumn = ref()
+    const url = 'http://localhost:3000/api/v1/department'
+    const record = ref({
+      name: null,
+      code: null
+    })
+    const newRecord = ref({
+      name: null,
+      code: null
+    })
+    const rows = ref([])
+
+    const submitPost = () => {
+      void api.post(url, record.value)
+        .then((response) => {
+          console.log(response)
+          Notify.create({ message: 'Added Data Successfully ', color: 'positive' })
+          getData()
+        })
+        .catch((error) => {
+          console.error(error)
+          Notify.create({ message: 'Added Data Failed', color: 'Negative' })
+        })
+      record.value = newRecord.value
+    }
+
+    const getData = () => {
+      void api.get(url)
+        .then((response) => {
+          rows.value = (response.data.data)
+          console.log(response, 'getData')
+        })
+    }
+
+    const onUpdateShow = (id) => {
+      idColumn.value = id
+      isUpdate.value = true
+      form.value = true
+      getDataId()
+    }
+
+    const getDataId = () => {
+      const newUrl = url + '/' + idColumn.value
+      void api.get(newUrl)
+        .then((response) => {
+          record.value = response.data.data
+          console.log(response, 'getData')
+        })
+    }
+
+    const submitUpdate = () => {
+      const updateUrl = url + '/' + idColumn.value
+      void api.put(updateUrl, record.value)
+        .then((response) => {
+          console.log(response)
+          Notify.create({ message: 'Update Data Successfully ', color: 'positive' })
+          getData()
+          isUpdate.value = false
+          record.value = newRecord.value
+        })
+        .catch((error) => {
+          console.error(error, error.response)
+          Notify.create({ message: 'Update Data Failed', color: 'Negative' })
+          isUpdate.value = false
+        })
+    }
+
+    const deleteData = (id) => {
+      Dialog.create({
+        title: 'Delete',
+        message: 'Are U sure to delete this ?'
+      }).onOk(() => {
+        const updateUrl = url + '/' + id
+        void api.delete(updateUrl)
+          .then((response) => {
+            console.log(response)
+            Notify.create({ message: 'Delete Data Successfully ', color: 'positive' })
+            getData()
+          })
+          .catch((error) => {
+            console.error(error, error.response)
+            Notify.create({ message: 'Delete Data Failed', color: 'Negative' })
+          })
+        // console.log('OK')
+      }).onCancel(() => {
+        // console.log('Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    }
+
+    const showDialog = () => {
+      isUpdate.value = false
+      form.value = true
+    }
+
+    onMounted(() => {
+      getData()
+    })
     return {
+      isUpdate,
+      record,
       form,
       columns,
-      rows
+      rows,
+      showDialog,
+      deleteData,
+      onUpdateShow,
+      getDataId,
+      submitPost,
+      submitUpdate
     }
   }
 }
