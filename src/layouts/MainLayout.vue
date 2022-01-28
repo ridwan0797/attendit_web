@@ -281,13 +281,13 @@ const pengaturan = [
     title: 'Hak Akses',
     caption: '',
     icon: 'accessibility',
-    to: 'hak-akses'
+    to: '/hak-akses/'
   },
   {
     title: 'Shift kerja',
     caption: '',
     icon: 'date_range',
-    to: 'shift-kerja'
+    to: '/shift-kerja/'
   },
   {
     title: 'Company',
