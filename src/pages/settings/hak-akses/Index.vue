@@ -15,7 +15,7 @@
       </template>
 
       <template v-slot:top-left>
-        <q-btn label="Tamban Role" icon="add_circle_outline" class="bg-primary text-white" @click="form = true"></q-btn>
+        <q-btn label="Tamban Role" icon="add_circle_outline" class="bg-primary text-white" :to="'/hak-akses/create'"></q-btn>
       </template>
 
       <template v-slot:body-cell-lampiran='cell'>
@@ -37,8 +37,9 @@
             flat
             color="blue"
             icon='edit'
-            @click="onUpdateShow(cell.row.id)"
+            :to="`/hak-akses/edit/${cell.row.id}`"
           />
+            <!-- @click="onUpdateShow(cell.row.id)" -->
 
           <q-btn
             round
@@ -164,7 +165,6 @@ export default {
           Notify.create({ message: 'Update Data Successfully ', color: 'positive' })
           getData()
           record.value = newRecord.value
-          isUpdate.value = false
         })
         .catch((error) => {
           console.error(error.response, stringify(record.value))
@@ -186,9 +186,10 @@ export default {
       void api.get(urlBaru)
         .then((response) => {
           record.value = response.data.data
+          console.log(record.value, 'update data')
           const newArr = String(record.value.permission).split(',')
           record.value.permission = newArr
-          console.log(newArr, 'getData')
+          console.log(newArr, 'Data Baru')
         })
     }
 
@@ -228,6 +229,7 @@ export default {
       form,
       columns,
       isUpdate,
+      getDetailData,
       onUpdateShow,
       submitPost,
       submitUpdate,

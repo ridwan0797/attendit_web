@@ -1,120 +1,98 @@
 <template>
   <div class="q-pa-md">
-    <q-table
-      title="Lokasi Perusahaan"
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-    >
-
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
-
-      <template v-slot:body-cell-lampiran='cell'>
-        <q-td class="text-center" v-bind='cell'>
-          <q-btn
-            round
-            dense
-            flat
-            color="primary"
-            icon='description'
-          />
-        </q-td>
-      </template>
-      <template v-slot:body-cell-approval='cell'>
-        <q-td class="text-center" v-bind='cell'>
-          <q-btn
-            round
-            dense
-            flat
-            color="green"
-            icon='done'
-          />
-
+    <div class="row q-py-sm">
+      <q-btn label="Tambah Shift" icon="add_circle_outline" class="bg-primary text-white" :to="'/shift-kerja/create'" ></q-btn>
+    </div>
+  <q-markup-table>
+    <thead>
+      <tr>
+        <th>SHIFT NAME</th>
+        <th>MONDAY</th>
+        <th>TUESDAY</th>
+        <th>WEDNESDAT</th>
+        <th>THURSDAY</th>
+        <th>FRIDAY</th>
+        <th>SATURDAY</th>
+        <th>SUNDAY</th>
+        <th>#</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(item, key) in rows " :key="key" style="cursor:pointer" @click="$router.push(`/shift-kerja/edit/${item.id}`)">
+        <td class="text-center">{{item.name}}</td>
+        <td class="text-center">{{item.monday_in_time}} - {{item.monday_out_time}}</td>
+        <td class="text-center">{{item.tuesday_in_time}} - {{item.tuesday_out_time}}</td>
+        <td class="text-center">{{item.wednesday_in_time}} - {{item.wednesday_out_time}}</td>
+        <td class="text-center">{{item.thursday_in_time}} - {{item.thursday_out_time}}</td>
+        <td class="text-center">{{item.friday_in_time}} - {{item.friday_out_time}}</td>
+        <td class="text-center">{{item.saturday_in_time}} - {{item.saturday_out_time}}</td>
+        <td class="text-center">{{item.sunday_in_time}} - {{item.sunday_out_time}}</td>
+        <td>
           <q-btn
             round
             dense
             flat
             color="red"
-            icon='close'
-          />
-        </q-td>
-      </template>
-    </q-table>
-
-    <q-dialog v-model="form">
-      <q-card style="width:450px;height:300px">
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h5 text-weight-medium">Departemen Form</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-
-        <q-card-section>
-          <q-input label="Nama" stack-label></q-input>
-        </q-card-section>
-
-        <q-card-section>
-          <q-input label="Kode" stack-label></q-input>
-        </q-card-section>
-
-         <q-card-actions align="right">
-          <q-btn flat label="SAVE" color="primary" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+            icon='delete'
+            @click="deleteData(item.id)"
+          /></td>
+      </tr>
+    </tbody>
+  </q-markup-table>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-const columns = [
-  {
-    name: 'nama',
-    required: true,
-    label: 'Nama',
-    align: 'center',
-    field: row => row.nama,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'senin', align: 'center', label: 'Senin', field: 'senin', sortable: true },
-  { name: 'selasa', align: 'center', label: 'Selasa', field: 'selasa', sortable: true },
-  { name: 'rabu', align: 'center', label: 'Rabu', field: 'rabu', sortable: true },
-  { name: 'kamis', align: 'center', label: 'Kamis', field: 'kamis', sortable: true },
-  { name: 'jumat', align: 'center', label: 'Jumat', field: 'jumat', sortable: true }
-]
-
-const rows = [
-  {
-    nama: 'Shift Pagi',
-    senin: '08.00 to 17.00',
-    selasa: '08.00 to 17.00',
-    rabu: '08.00 to 17.00',
-    kamis: '08.00 to 17.00',
-    jumat: '08.00 to 17.00'
-  },
-  {
-    nama: 'Shift Malam',
-    senin: '17.00 to 21.00',
-    selasa: '17.00 to 21.00',
-    rabu: '17.00 to 21.00',
-    kamis: '17.00 to 21.00',
-    jumat: '17.00 to 21.00'
-  }
-]
+import { ref, onMounted } from 'vue'
+import { api } from 'src/boot/axios'
+import { Dialog, Notify } from 'quasar'
 
 export default {
   setup () {
     const form = ref(false)
+    const rows = ref([])
+    const url = 'http://localhost:3000/api/v1/office-shift'
+
+    const getData = () => {
+      void api.get(url)
+        .then((response) => {
+          rows.value = (response.data.data)
+          console.log(response, 'getData')
+        })
+    }
+
+    const deleteData = (id) => {
+      Dialog.create({
+        title: 'Delete',
+        message: 'Are U sure to delete this ?'
+      }).onOk(() => {
+        const updateUrl = url + '/' + id
+        void api.delete(updateUrl)
+          .then((response) => {
+            console.log(response)
+            Notify.create({ message: 'Delete Data Successfully ', color: 'positive' })
+            getData()
+          })
+          .catch((error) => {
+            console.error(error, error.response)
+            Notify.create({ message: 'Delete Data Failed', color: 'Negative' })
+          })
+        // console.log('OK')
+      }).onCancel(() => {
+        // console.log('Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    }
+
+    onMounted(() => {
+      getData()
+    })
+
     return {
+      deleteData,
+      getData,
       form,
-      columns,
       rows
     }
   }
