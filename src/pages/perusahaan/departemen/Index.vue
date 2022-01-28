@@ -7,7 +7,7 @@
       row-key="name"
     >
       <template v-slot:top-left>
-        <q-btn label="Tambah Lokasi" icon="add_circle_outline" class="bg-primary text-white" @click="showDialog()"></q-btn>
+        <q-btn label="Tambah Departemen" icon="add_circle_outline" class="bg-primary text-white" @click="showDialog()"></q-btn>
       </template>
 
       <template v-slot:top-right>

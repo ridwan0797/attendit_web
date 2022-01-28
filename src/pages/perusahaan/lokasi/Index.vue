@@ -7,6 +7,8 @@
       row-key="name"
     >
       <template v-slot:top-left>
+        <!-- <q-btn label="Tambah Lokasi" icon="add_circle_outline" class="bg-primary text-white" @click="form = true; tipe = 'create'"></q-btn> -->
+
         <q-btn label="Tambah Lokasi" icon="add_circle_outline" class="bg-primary text-white" @click="form = true; tipe = 'create'"></q-btn>
       </template>
 
