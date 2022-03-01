@@ -13,7 +13,7 @@ const routes = [
     meta: { name: 'Pegawai' },
     children: [
       { path: '/pegawai/edit/:id', component: () => import('src/pages/pegawai/Form.vue'), meta: { mode: 'edit', name: 'Pegawai' } },
-      { path: '/pegawai/create', component: () => import('src/pages/pegawai/Form.vue'), meta: { mode: 'create', name: 'Pegawai' } },
+      { path: '/pegawai/create', component: () => import('src/pages/pegawai/NewForm.vue'), meta: { mode: 'create', name: 'Pegawai' } },
       {
         path: '',
         component: () => import('pages/pegawai/Index.vue'),
@@ -80,9 +80,18 @@ const routes = [
     path: '/hak-akses',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/settings/hak-akses/Index.vue'), meta: { name: 'Hak Akses' } },
+      { path: '', component: () => import('src/pages/settings/Index.vue'), meta: { name: 'Hak Akses' } },
       { path: '/hak-akses/create', component: () => import('src/pages/settings/hak-akses/Form.vue'), meta: { mode: 'create', name: 'Hak Akses' } },
       { path: '/hak-akses/edit/:id', component: () => import('src/pages/settings/hak-akses/Form.vue'), meta: { mode: 'edit', name: 'Hak Akses' } }
+    ]
+  },
+  {
+    path: '/announcements',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/announcements/Index.vue'), meta: { name: 'Announcements' } },
+      { path: '/announcements/create', component: () => import('src/pages/announcements/Form.vue'), meta: { mode: 'create', name: 'Announcements' } },
+      { path: '/announcements/edit/:id', component: () => import('src/pages/announcements/Form.vue'), meta: { mode: 'edit', name: 'Announcements' } }
     ]
   },
   {

@@ -2,7 +2,7 @@
   <q-page padding class="bg-grey-2 ">
     <div class="q-pa-md bg-white rounded-xl shadow-md">
       <div class="row full-width q-mt-xs">
-        <div class="text-h6 text-weight-bold">Department Company</div>
+        <div class="text-h6 text-weight-bold">Announcements</div>
         <q-space />
         <q-btn size="sm" label="Tambah Departemen" icon="add_circle_outline" class="bg-primary text-white" @click="showDialog()"></q-btn>
       </div>

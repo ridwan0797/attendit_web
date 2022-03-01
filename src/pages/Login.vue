@@ -22,9 +22,9 @@
       </div>
 
       <div class="col col-md-4 col-sm-4 bg-primary">
-        <div class="row justify-center items-center full-height full-width">
+        <div class="row gradient-base justify-center items-center full-height full-width">
           <div>
-            <q-card class="bg-primary" flat>
+            <q-card class="bg-transparent" flat>
               <q-card-section>
                 <div class="q-ml-xl" style="color:#20406e">
                   <q-img src="~assets/white_icon.png" class="q-ml-xl"  width="100px"></q-img>
@@ -62,3 +62,11 @@ export default defineComponent({
   name: 'PageLogin'
 })
 </script>
+
+<style>
+.gradient-base  {
+    color: white;
+    background-image: linear-gradient(-45deg, #5247ff, #7147ff, #56c4f7 );
+    border-radius: 10px;
+}
+</style>

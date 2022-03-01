@@ -51,43 +51,47 @@
                   <tbody>
                       <tr>
                           <td>
-                              <q-input dense stack-label v-model="record.monday_in_time" @update:model-value="(x) => hitungJam(record.monday_out_time, x)" type="time" label="Monday in" />
-                              <q-input dense stack-label v-model="record.monday_out_time" @update:model-value="(x) => hitungJam(x, record.monday_in_time)" type="time" label="Monday out" />
-                              <q-input dense stack-label v-model="hitung" label="Monday Working Hours" />
+                              <q-input dense stack-label v-model="record.monday_in_time" @update:model-value="(x) => record.monday_out_time ? record.monday_working_time = rangeHour(record.monday_in_time, record.monday_out_time) : '' " type="time" label="Monday in" />
+                              <q-input dense stack-label v-model="record.monday_out_time" @update:model-value="(x) => record.monday_working_time = rangeHour(record.monday_in_time, record.monday_out_time)" type="time" label="Monday out" />
+                              <q-input dense stack-label v-model="record.monday_working_time" label="Monday Working Hours" />
                           </td>
                           <td>
-                              <q-input dense stack-label v-model="record.tuesday_in_time" type="time" label="Tuesday in" />
-                              <q-input dense stack-label v-model="record.tuesday_out_time" type="time" label="Tuesday out" />
-                              <q-input dense stack-label v-model="record.tuesday_working_hours" type="number" label="Tuesday Working Hours" />
+                              <q-input dense stack-label v-model="record.tuesday_in_time" @update:model-value="(x) => record.tuesday_out_time ? record.tuesday_working_time = rangeHour(record.tuesday_in_time, record.tuesday_out_time) : '' " type="time" label="Tuesday in" />
+                              <q-input dense stack-label v-model="record.tuesday_out_time" @update:model-value="(x) => record.tuesday_working_time = rangeHour(record.tuesday_in_time, record.tuesday_out_time)" type="time" label="Tuesday out" />
+                              <q-input dense stack-label v-model="record.tuesday_working_time" type="number" label="Tuesday Working Hours" />
                           </td>
                           <td>
-                              <q-input dense stack-label v-model="record.wednesday_in_time" type="time" label="Wednesday in" />
-                              <q-input dense stack-label v-model="record.wednesday_out_time" type="time" label="Wednesday out" />
-                              <q-input dense stack-label v-model="record.wednesday_working_hours" type="number" label="Wednesday Working Hours" />
+                              <q-input dense stack-label v-model="record.wednesday_in_time" @update:model-value="(x) => record.wednesday_out_time ? record.wednesday_working_time = rangeHour(record.wednesday_in_time, record.wednesday_out_time) : '' " type="time" label="Wednesday in" />
+                              <q-input dense stack-label v-model="record.wednesday_out_time" @update:model-value="(x) => record.wednesday_working_time = rangeHour(record.wednesday_in_time, record.wednesday_out_time)" type="time" label="Wednesday out" />
+                              <q-input dense stack-label v-model="record.wednesday_working_time" type="number" label="Wednesday Working Hours" />
                           </td>
                           <td>
-                              <q-input dense stack-label v-model="record.thursday_in_time" type="time" label="Thursday in" />
-                              <q-input dense stack-label v-model="record.thursday_out_time" type="time" label="Thursday out" />
-                              <q-input dense stack-label v-model="record.thursday_working_hours" type="number" label="Thursday Working Hours" />
+                              <q-input dense stack-label v-model="record.thursday_in_time" @update:model-value="(x) => record.thursday_out_time ? record.thursday_working_time = rangeHour(record.thursday_in_time, record.thursday_out_time) : '' " type="time" label="Thursday in" />
+                              <q-input dense stack-label v-model="record.thursday_out_time" @update:model-value="(x) => record.thursday_working_time = rangeHour(record.thursday_in_time, record.thursday_out_time)" type="time" label="Thursday out" />
+                              <q-input dense stack-label v-model="record.thursday_working_time" type="number" label="Thursday Working Hours" />
                           </td>
                           <td>
-                              <q-input dense stack-label v-model="record.friday_in_time" type="time" label="Friday in" />
-                              <q-input dense stack-label v-model="record.friday_out_time" type="time" label="Friday out" />
-                              <q-input dense stack-label v-model="record.friday_working_hours" type="number" label="Friday Working Hours" />
+                              <q-input dense stack-label v-model="record.friday_in_time" @update:model-value="(x) => record.friday_out_time ? record.friday_working_time = rangeHour(record.friday_in_time, record.friday_out_time) : '' " type="time" label="Friday in" />
+                              <q-input dense stack-label v-model="record.friday_out_time" @update:model-value="(x) => record.friday_working_time = rangeHour(record.friday_in_time, record.friday_out_time)" type="time" label="Friday out" />
+                              <q-input dense stack-label v-model="record.friday_working_time" type="number" label="Friday Working Hours" />
                           </td>
                           <td>
-                              <q-input dense stack-label v-model="record.saturday_in_time" type="time" label="Saturday in" />
-                              <q-input dense stack-label v-model="record.saturday_out_time" type="time" label="Saturday out" />
-                              <q-input dense stack-label v-model="record.saturday_working_hours" type="number" label="Saturday Working Hours" />
+                              <q-input dense stack-label v-model="record.saturday_in_time" @update:model-value="(x) => record.saturday_out_time ? record.saturday_working_time = rangeHour(record.saturday_in_time, record.saturday_out_time) : '' " type="time" label="Saturday in" />
+                              <q-input dense stack-label v-model="record.saturday_out_time" @update:model-value="(x) => record.saturday_working_time = rangeHour(record.saturday_in_time, record.saturday_out_time)" type="time" label="Saturday out" />
+                              <q-input dense stack-label v-model="record.saturday_working_time" type="number" label="Saturday Working Hours" />
                           </td>
                           <td>
-                              <q-input dense stack-label v-model="record.sunday_in_time" type="time" label="Sunday in" />
-                              <q-input dense stack-label v-model="record.sunday_out_time" type="time" label="Sunday out" />
-                              <q-input dense stack-label v-model="record.sunday_working_hours" type="number" label="Sunday Working Hours" />
+                              <q-input dense stack-label v-model="record.sunday_in_time" @update:model-value="(x) => record.sunday_out_time ? record.sunday_working_time = rangeHour(record.sunday_in_time, record.sunday_out_time) : '' " type="time" label="Sunday in" />
+                              <q-input dense stack-label v-model="record.sunday_out_time" @update:model-value="(x) => record.sunday_working_time = rangeHour(record.sunday_in_time, record.sunday_out_time)" type="time" label="Sunday out" />
+                              <q-input dense stack-label v-model="record.sunday_working_time" type="number" label="Sunday Working Hours" />
                           </td>
                       </tr>
                   </tbody>
               </q-markup-table>
+            </q-card-section>
+
+            <q-card-section>
+              {{rangeHour()}}
             </q-card-section>
           </q-card>
         </div>
@@ -199,6 +203,25 @@ export default defineComponent({
       $router.push('/shift-kerja/')
     }
 
+    const rangeHour = (startHour, endHour) => {
+      const cutStartHour = String(startHour).split(':')
+      const hour1 = Number(cutStartHour[0]) * 60
+      const minute1 = Number(cutStartHour[1])
+      const startMinutes = hour1 + minute1
+
+      const cutEndHour = String(endHour).split(':')
+      const hour2 = Number(cutEndHour[0]) * 60
+      const minute2 = Number(cutEndHour[1])
+      const endMinutes = hour2 + minute2
+
+      const resultRange = (endMinutes - startMinutes) / 60
+      const kk = String(Number(resultRange).toFixed(2)).split('.')
+      const minute = Number(Number(kk[1])) / 60
+      const hour = Number(kk[0])
+      const resultHour = minute.toFixed(0) + hour
+      return Number(resultHour)
+    }
+
     // const hitungJam = (x, y) => {
     //   if (record.value.monday_in_time)
     //   console.log(x, y)
@@ -219,6 +242,7 @@ export default defineComponent({
       isUpdate,
       // hitung,
       // hitungJam,
+      rangeHour,
       submitPost,
       submitUpdate,
       onClose

@@ -1,84 +1,71 @@
 <template>
-  <div class="q-pa-md">
-    <q-table
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-    >
+      <q-table
+        v-bind="$attrs"
+        :rows="rows"
+        :columns="columns"
+        row-key="name"
+        flat
+      >
+        <template v-slot:body-cell-lampiran='cell'>
+          <q-td class="text-center" v-bind='cell'>
+            <q-btn
+              round
+              dense
+              flat
+              color="primary"
+              icon='description'
+            />
+          </q-td>
+        </template>
+        <template v-slot:body-cell-action='cell'>
+          <q-td class="text-center" v-bind='cell'>
+            <q-btn
+              round
+              dense
+              flat
+              color="blue"
+              icon='edit'
+              :to="`/hak-akses/edit/${cell.row.id}`"
+            />
+              <!-- @click="onUpdateShow(cell.row.id)" -->
 
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
+            <q-btn
+              round
+              dense
+              flat
+              color="red"
+              icon='delete'
+              @click="deleteData(cell.row.id)"
+            />
+          </q-td>
+        </template>
+      </q-table>
 
-      <template v-slot:top-left>
-        <q-btn label="Tamban Role" icon="add_circle_outline" class="bg-primary text-white" :to="'/hak-akses/create'"></q-btn>
-      </template>
+      <q-dialog v-model="form">
+        <q-card style="width:450px;height:400px">
+          <q-card-section class="row items-center q-pb-none">
+            <div class="text-h6 text-weight-medium">Hak Akses Form</div>
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
 
-      <template v-slot:body-cell-lampiran='cell'>
-        <q-td class="text-center" v-bind='cell'>
-          <q-btn
-            round
-            dense
-            flat
-            color="primary"
-            icon='description'
-          />
-        </q-td>
-      </template>
-      <template v-slot:body-cell-action='cell'>
-        <q-td class="text-center" v-bind='cell'>
-          <q-btn
-            round
-            dense
-            flat
-            color="blue"
-            icon='edit'
-            :to="`/hak-akses/edit/${cell.row.id}`"
-          />
-            <!-- @click="onUpdateShow(cell.row.id)" -->
+          <q-card-section>
+            <q-input label="Nama" v-model="record.name" stack-label></q-input>
+          </q-card-section>
 
-          <q-btn
-            round
-            dense
-            flat
-            color="red"
-            icon='delete'
-            @click="deleteData(cell.row.id)"
-          />
-        </q-td>
-      </template>
-    </q-table>
+          <q-card-section>
+            <q-select :options="status" label="Status" v-model="record.status" stack-label></q-select>
+          </q-card-section>
 
-    <q-dialog v-model="form">
-      <q-card style="width:450px;height:400px">
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6 text-weight-medium">Hak Akses Form</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
+          <q-card-section>
+            <q-select multiple use-chips :options="roles" label="Permission" v-model="record.permission" stack-label></q-select>
+          </q-card-section>
 
-        <q-card-section>
-          <q-input label="Nama" v-model="record.name" stack-label></q-input>
-        </q-card-section>
-
-        <q-card-section>
-          <q-select :options="status" label="Status" v-model="record.status" stack-label></q-select>
-        </q-card-section>
-
-        <q-card-section>
-          <q-select multiple use-chips :options="roles" label="Permission" v-model="record.permission" stack-label></q-select>
-        </q-card-section>
-
-         <q-card-actions align="right">
-          <q-btn flat label="SAVE" color="primary" @click="() => { isUpdate === true ? submitUpdate() :  submitPost() }" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-  </div>
+          <q-card-actions align="right">
+            <q-btn flat label="SAVE" color="primary" @click="() => { isUpdate === true ? submitUpdate() :  submitPost() }" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
 </template>
 
 <script>

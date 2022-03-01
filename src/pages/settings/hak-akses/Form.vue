@@ -1,5 +1,5 @@
 <template>
-   <q-dialog
+    <q-dialog
       v-model="dialog"
       persistent
       :maximized="true"
@@ -86,15 +86,15 @@ export default defineComponent({
   setup () {
     const $router = useRouter()
     const $route = useRoute()
-    const url = 'http://localhost:3000/api/v1/roles'
+    const url = 'http://localhost:3000/api/v1/role'
     const urlUpdate = ref('')
     const dialog = ref(true)
     const form = ref(false)
     const isUpdate = ref(false)
     const rows = ref([])
     const status = ref([
-      'Aktif',
-      'Tidak Aktif'
+      'Active',
+      'Inactive'
     ])
 
     const roles = ref([
@@ -107,7 +107,7 @@ export default defineComponent({
 
     const record = ref({
       name: null,
-      status: 'Tidak Aktif',
+      status: 'Inactive',
       permission: []
     })
 
@@ -140,7 +140,7 @@ export default defineComponent({
     }
 
     const submitPost = () => {
-      void api.post(url, stringify({ name: record.value.name, permission: record.value.permission }, { arrayFormat: 'comma' }), config)
+      void api.post(url, stringify({ name: record.value.name, permission: record.value.permission, status: record.value.status }, { arrayFormat: 'comma' }), config)
         .then((response) => {
           console.log(stringify(record.value))
           Notify.create({ message: 'Added Data Successfully ', color: 'positive' })

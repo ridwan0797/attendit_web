@@ -1,45 +1,49 @@
 <template>
-  <div class="q-pa-md">
-    <div class="row q-py-sm">
-      <q-btn label="Tambah Shift" icon="add_circle_outline" class="bg-primary text-white" :to="'/shift-kerja/create'" ></q-btn>
+  <q-page padding class="bg-grey-2">
+    <div class="q-pa-md shadow-md rounded-xl bg-white">
+      <div class="row full-width q-mt-xs">
+        <div class="text-h6 text-weight-bold">Shift Kerja</div>
+        <q-space />
+        <q-btn size="sm" label="Tambah Shift" icon="add_circle_outline" class="bg-primary text-white" :to="'/shift-kerja/create'" ></q-btn>
+      </div>
+    <q-markup-table class="mt-3" flat>
+      <thead>
+        <tr>
+          <th>SHIFT NAME</th>
+          <th>MONDAY</th>
+          <th>TUESDAY</th>
+          <th>WEDNESDAT</th>
+          <th>THURSDAY</th>
+          <th>FRIDAY</th>
+          <th>SATURDAY</th>
+          <th>SUNDAY</th>
+          <th>#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, key) in rows " :key="key" style="cursor:pointer" @click="$router.push(`/shift-kerja/edit/${item.id}`)">
+          <td class="text-center">{{item.name}}</td>
+          <td class="text-center">{{item.monday_in_time}} - {{item.monday_out_time}}</td>
+          <td class="text-center">{{item.tuesday_in_time}} - {{item.tuesday_out_time}}</td>
+          <td class="text-center">{{item.wednesday_in_time}} - {{item.wednesday_out_time}}</td>
+          <td class="text-center">{{item.thursday_in_time}} - {{item.thursday_out_time}}</td>
+          <td class="text-center">{{item.friday_in_time}} - {{item.friday_out_time}}</td>
+          <td class="text-center">{{item.saturday_in_time}} - {{item.saturday_out_time}}</td>
+          <td class="text-center">{{item.sunday_in_time}} - {{item.sunday_out_time}}</td>
+          <td>
+            <q-btn
+              round
+              dense
+              flat
+              color="red"
+              icon='delete'
+              @click="deleteData(item.id)"
+            /></td>
+        </tr>
+      </tbody>
+    </q-markup-table>
     </div>
-  <q-markup-table>
-    <thead>
-      <tr>
-        <th>SHIFT NAME</th>
-        <th>MONDAY</th>
-        <th>TUESDAY</th>
-        <th>WEDNESDAT</th>
-        <th>THURSDAY</th>
-        <th>FRIDAY</th>
-        <th>SATURDAY</th>
-        <th>SUNDAY</th>
-        <th>#</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(item, key) in rows " :key="key" style="cursor:pointer" @click="$router.push(`/shift-kerja/edit/${item.id}`)">
-        <td class="text-center">{{item.name}}</td>
-        <td class="text-center">{{item.monday_in_time}} - {{item.monday_out_time}}</td>
-        <td class="text-center">{{item.tuesday_in_time}} - {{item.tuesday_out_time}}</td>
-        <td class="text-center">{{item.wednesday_in_time}} - {{item.wednesday_out_time}}</td>
-        <td class="text-center">{{item.thursday_in_time}} - {{item.thursday_out_time}}</td>
-        <td class="text-center">{{item.friday_in_time}} - {{item.friday_out_time}}</td>
-        <td class="text-center">{{item.saturday_in_time}} - {{item.saturday_out_time}}</td>
-        <td class="text-center">{{item.sunday_in_time}} - {{item.sunday_out_time}}</td>
-        <td>
-          <q-btn
-            round
-            dense
-            flat
-            color="red"
-            icon='delete'
-            @click="deleteData(item.id)"
-          /></td>
-      </tr>
-    </tbody>
-  </q-markup-table>
-  </div>
+  </q-page>
 </template>
 
 <script>
