@@ -247,10 +247,10 @@
          <q-btn flat round unelevated icon="clear" @click=" rightDrawerOpen = false"></q-btn>
        </div>
 
-       <employee-content v-if="typeContent === 'employee'" :dataEmployee="detail"></employee-content>
+       <employee-content v-if="typeContent === 'employee'" :dataEmployee="detail" @onProfile="cekProfile()"></employee-content>
        <sick-content v-else-if="typeContent === 'sick-submission'" :data="detail"></sick-content>
        <permission-content v-else-if="typeContent === 'permission-submission'" :data="detail"></permission-content>
-       <location-content v-else-if="typeContent === 'company-location'" :data="detail"></location-content>
+       <location-content v-else-if="typeContent === 'company-location'" :data="detail" @onProfile="onLocation()"></location-content>
       <!-- drawer content -->
     </q-drawer>
 
@@ -263,6 +263,7 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 // import EssentialLink from 'components/EssentialLink.vue'
 import EmployeeContent from 'components/EmployeeContent.vue'
 import SickContent from 'components/SickContent.vue'
@@ -349,6 +350,7 @@ export default {
     LocationContent
   },
   setup () {
+    const $router = useRouter()
     const leftDrawerOpen = ref(false)
     const rightDrawerOpen = ref(false)
     const detail = ref({})
@@ -361,9 +363,23 @@ export default {
       typeContent.value = type
     }
 
+    const cekProfile = () => {
+      rightDrawerOpen.value = false
+      void $router.push(`/pegawai/${detail.value.id}`)
+      console.log('berhasil')
+    }
+
+    const onLocation = () => {
+      rightDrawerOpen.value = false
+      void $router.push(`/perusahaan/lokasi/${detail.value.id}`)
+      console.log('berhasil')
+    }
+
     return {
       typeContent,
       detail,
+      cekProfile,
+      onLocation,
       cek,
       absensi,
       perusahaan,

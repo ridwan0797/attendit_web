@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="row window-width window-height">
-      <div class="col-8 col-md-8 col-sm-8 q-pa-sm bg-white">
+      <div v-if="!$q.screen.lt.lg" class="col-8 col-md-8 col-sm-8 q-pa-sm bg-white">
         <div class="full-width  ">
           <div class="q-ml-lg" style="color:#20406e">
             <q-img src="~assets/letter.png"  width="150px"></q-img>
@@ -14,14 +14,14 @@
             </div>
           </div>
           <div class="row q-mt-lg justify-center items-center">
-            <div class="col-lg-11">
+            <div class="col-11 col-md-11 col-lg-11">
             <q-img src="~assets/a.svg" class="" style="width:100%"></q-img>
             </div>
           </div>
       </div>
       </div>
 
-      <div class="col col-md-4 col-sm-4 bg-primary">
+      <div class="col col-md-4 col-sm-12 bg-primary">
         <div class="row gradient-base justify-center items-center full-height full-width">
           <div>
             <q-card class="bg-transparent" flat>

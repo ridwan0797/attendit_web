@@ -65,16 +65,11 @@
       </div>
     </div>
 
-    <div class="row fulll-width text-subtitle1 q-mt-xl">
+    <div class="row full-width text-weight-thin mt-4">
       <div class="col text-center text-weight-bold">
-        Related Document
-      </div>
-    </div>
-    <div class="row full-width text-weight-thin">
-      <div class="col text-center text-weight-bold">
-        <q-card flat class="q-ma-md" style="height:150px">
+        <q-card flat class="q-ma-md bg-grey-1" style="height:150px">
           <q-card-section class="column full-height justify-center" >
-            <q-btn class="q-mx-xl" color="primary" label="download"></q-btn>
+            <q-btn class="q-mx-xl" color="primary" @click="emitProfile()" label="See Full Profile"></q-btn>
           </q-card-section>
         </q-card>
       </div>
@@ -88,8 +83,12 @@ export default {
   props: {
     dataEmployee: Object
   },
-  setup () {
+  setup (props, vm) {
+    const emitProfile = () => {
+      vm.emit('onProfile')
+    }
     return {
+      emitProfile
 
     }
   }

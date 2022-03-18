@@ -8,7 +8,40 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-8 gap-4">
+    <div>
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
+        narrow-indicator
+      >
+        <q-tab name="roles" label="Roles" />
+        <q-tab name="shift" label="Shift" />
+        <q-tab name="company" label="Company" />
+      </q-tabs>
+
+      <q-separator />
+
+      <q-tab-panels v-model="tab" animated class="mt-5 rounded-md shadow-md">
+        <q-tab-panel name="roles">
+          <Roles class="q-pa-md"/>
+        </q-tab-panel>
+
+        <q-tab-panel name="shift">
+          <Shift class="q-pa-md" />
+        </q-tab-panel>
+
+        <q-tab-panel name="company">
+          <div class="text-h6">Movies</div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
+
+    <!-- <div class="grid grid-cols-8 gap-4">
       <div class="col-span-2 bg-white shadow-sm rounded-xl q-mx-lg" style="height:240px;">
         <div class="font-medium text-md text-center mt-3">Main Menu</div>
         <q-separator class="mt-3" inset />
@@ -55,9 +88,8 @@
       </div>
 
       <div class="col-span-6 bg-white shadow-xl rounded-xl q-mx-lg" style="height:700px">
-        <Roles class="q-pa-md" v-if="menuTo === 'Roles'" />
       </div>
-    </div>
+    </div> -->
   </q-page>
 </template>
 
@@ -65,21 +97,24 @@
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Roles from 'src/pages/settings/hak-akses/Index.vue'
+import Shift from 'src/pages/settings/shift/Index.vue'
 
 export default defineComponent({
-  components: { Roles },
+  components: { Roles, Shift },
   setup () {
     const $router = useRouter()
-    const menuTo = ref('Roles')
+    const tab = ref('roles')
     const addData = () => {
-      if (menuTo.value === 'Roles') {
+      if (tab.value === 'roles') {
         void $router.push('/hak-akses/create')
+      } else if (tab.value === 'shift') {
+        void $router.push('/shift-kerja/create')
       }
     }
 
     return {
       addData,
-      menuTo
+      tab
     }
   }
 })

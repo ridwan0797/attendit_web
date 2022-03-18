@@ -13,6 +13,7 @@ const routes = [
     meta: { name: 'Pegawai' },
     children: [
       { path: '/pegawai/edit/:id', component: () => import('src/pages/pegawai/Form.vue'), meta: { mode: 'edit', name: 'Pegawai' } },
+      { path: '/pegawai/:id', component: () => import('src/pages/pegawai/View.vue'), meta: { mode: 'view', name: 'Pegawai' } },
       { path: '/pegawai/create', component: () => import('src/pages/pegawai/NewForm.vue'), meta: { mode: 'create', name: 'Pegawai' } },
       {
         path: '',
@@ -34,9 +35,9 @@ const routes = [
         component: () => import('src/pages/perusahaan/lokasi/Index.vue'),
         meta: { name: 'Lokasi Perusahaan' },
         children: [
-          { path: '/perusahaan/lokasi/create', component: () => import('src/pages/perusahaan/lokasi/Form.vue'), meta: { name: 'Lokasi Perusahaan', mode: 'create' } }
-        ]
+          { path: '/perusahaan/lokasi/create', component: () => import('src/pages/perusahaan/lokasi/Form.vue'), meta: { name: 'Lokasi Perusahaan', mode: 'create' } }]
       },
+      { path: '/perusahaan/lokasi/:id', component: () => import('src/pages/perusahaan/lokasi/View.vue'), meta: { name: 'Lokasi Perusahaan', mode: 'view' } },
       { path: '/perusahaan/departemen', component: () => import('src/pages/perusahaan/departemen/Index.vue'), meta: { name: 'Departemen Perusahaan' } }
     ]
   },

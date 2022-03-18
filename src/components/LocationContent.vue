@@ -25,38 +25,30 @@
         </q-card-section>
 
         <q-card-section>
-          <q-markup-table class="full-width" flat>
+          <q-markup-table dense separator="none" class="q-pa-sm full-width" flat>
             <tbody>
-              <tr>
+              <tr >
                 <td>Company Name</td>
                 <td>: {{$props.data.name}}</td>
               </tr>
-              <tr>
+              <tr class="bg-grey-1">
                 <td>Email</td>
                 <td>: {{$props.data.email}}</td>
               </tr>
-              <tr>
+              <tr >
                 <td>Number</td>
                 <td>: {{$props.data.phone}}</td>
               </tr>
-              <tr>
+              <tr class="bg-grey-1">
                 <td>City</td>
                 <td>: {{$props.data.city}}</td>
               </tr>
-              <tr>
-                <td>Province</td>
-                <td>: {{$props.data.province}}</td>
-              </tr>
-              <tr>
-                <td>Address</td>
-                <td>: {{$props.data.address}}</td>
-              </tr>
-              <tr>
-                <td>Zip Code</td>
-                <td>: {{$props.data.zip_code}}</td>
-              </tr>
             </tbody>
           </q-markup-table>
+        </q-card-section>
+
+        <q-card-section class="column full-height justify-center" >
+          <q-btn class="q-mx-xl" color="primary" @click="emitLocation()" label="See Full Information"></q-btn>
         </q-card-section>
       </q-card>
   </div>
@@ -82,9 +74,13 @@ export default {
   props: {
     data: Object
   },
-  setup () {
+  setup (props, vm) {
+    const emitLocation = () => {
+      vm.emit('onProfile')
+    }
     return {
-      zoom: 16
+      zoom: 16,
+      emitLocation
 
     }
   }

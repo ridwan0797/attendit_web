@@ -6,3 +6,7 @@ body {
 #map {
   height: 180px;
 }
+
+.gradient-primary {
+  background-image: linear-gradient(to right, #5247ff, #7147ff, #56c4f7 );
+}

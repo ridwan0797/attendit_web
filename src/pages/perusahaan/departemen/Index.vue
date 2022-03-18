@@ -48,7 +48,7 @@
       </q-table>
 
       <q-dialog v-model="form">
-        <q-card style="width:450px;height:300px">
+        <!-- <q-card style="width:450px;height:300px">
           <q-card-section class="row items-center q-pb-none">
             <div class="text-h5 text-weight-medium">Departemen Form</div>
             <q-space />
@@ -66,7 +66,29 @@
           <q-card-actions align="right">
             <q-btn flat label="SAVE" color="primary" @click="() => { isUpdate === true ? submitUpdate() :  submitPost() }" v-close-popup />
           </q-card-actions>
-        </q-card>
+        </q-card> -->
+        <div class="grid grid-cols-7 bg-white rounded-xl" style="width:500px; height:300px">
+          <div class="col-span-7 md:col-span-7 lg:col-span-7 full-width">
+            <div class=" bg-white q-pa-md mx-4">
+              <div class="row">
+                <div class="text-md font-semibold">
+                  Form Table
+                </div>
+                <q-space />
+                <q-btn round flat class="mb-4" size="sm" icon="restart_alt" />
+                <q-btn round flat class="mb-4" size="sm" icon="close" v-close-popup />
+              </div>
+              <div class="q-pa-md">
+                <q-input outlined  label="Nama" v-model="record.name" stack-label></q-input>
+                <q-input outlined  class="mt-2" label="Kode" v-model="record.code" stack-label></q-input>
+              </div>
+
+              <div class="row justify-end">
+                <q-btn flat color="primary" label="save"  @click="() => { isUpdate === true ? submitUpdate() :  submitPost() }" />
+              </div>
+            </div>
+          </div>
+        </div>
       </q-dialog>
     </div>
   </q-page>

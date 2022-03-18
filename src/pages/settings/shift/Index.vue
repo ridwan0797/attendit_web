@@ -1,22 +1,15 @@
 <template>
-  <q-page padding class="bg-grey-2">
-    <div class="q-pa-md shadow-md rounded-xl bg-white">
-      <div class="row full-width q-mt-xs">
-        <div class="text-h6 text-weight-bold">Shift Kerja</div>
-        <q-space />
-        <q-btn size="sm" label="Tambah Shift" icon="add_circle_outline" class="bg-primary text-white" :to="'/shift-kerja/create'" ></q-btn>
-      </div>
     <q-markup-table class="mt-3" flat>
       <thead>
         <tr>
-          <th>SHIFT NAME</th>
-          <th>MONDAY</th>
-          <th>TUESDAY</th>
-          <th>WEDNESDAT</th>
-          <th>THURSDAY</th>
-          <th>FRIDAY</th>
-          <th>SATURDAY</th>
-          <th>SUNDAY</th>
+          <th>Shift Name</th>
+          <th class="capitalize">Monday</th>
+          <th class="capitalize">Tuesday</th>
+          <th class="capitalize">Wednesday</th>
+          <th class="capitalize">Thursday</th>
+          <th class="capitalize">Friday</th>
+          <th class="capitalize">Saturday</th>
+          <th class="capitalize">Sunday</th>
           <th>#</th>
         </tr>
       </thead>
@@ -42,8 +35,6 @@
         </tr>
       </tbody>
     </q-markup-table>
-    </div>
-  </q-page>
 </template>
 
 <script>
